@@ -1,10 +1,12 @@
 import "./App.css";
-
+import LandingPage from "./LandingPage/LandingPage";
+import Home from "./Home/Home";
 function App() {
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <>
+      {/* <LandingPage /> */}
+      <Home />
+    </>
   );
 }
 
