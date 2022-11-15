@@ -9,6 +9,7 @@ import {
   createEvidences,
   createDiagnoseBody,
 } from "../utils/jsonBody";
+import DiagnosisResult from "../Components/DiagnosisResult";
 
 let evidences = [];
 const Home = () => {
@@ -16,6 +17,7 @@ const Home = () => {
   const myHttp2 = useHttp();
   const [age, setAge] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [diagnosisData, setDiagnosisData] = useState([]);
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -35,10 +37,12 @@ const Home = () => {
     setLoading(true);
     for (let input of inputs) {
       let symptomText = input.value;
-      await myHttp.post({
-        url: SYMPTOM_DETAILS,
-        body: parseBody(symptomText, age),
-      });
+      if (symptomText.length > 0) {
+        await myHttp.post({
+          url: SYMPTOM_DETAILS,
+          body: parseBody(symptomText, age),
+        });
+      }
     }
     setLoading(false);
   };
@@ -67,8 +71,10 @@ const Home = () => {
   // Creates the evidences array for diagnosis request
   useEffect(() => {
     if (myHttp.data) {
-      let evidenceBody = createEvidenceBody(myHttp.data, 0);
-      evidences = createEvidences(evidences, evidenceBody);
+      if (myHttp.data.obvious) {
+        let evidenceBody = createEvidenceBody(myHttp.data, 0);
+        evidences = createEvidences(evidences, evidenceBody);
+      }
     }
   }, [myHttp.data]);
 
@@ -76,6 +82,7 @@ const Home = () => {
   useEffect(() => {
     if (myHttp2.data) {
       console.log(myHttp2.data);
+      setDiagnosisData(myHttp2.data);
     }
   }, [myHttp2.data]);
 
@@ -106,6 +113,7 @@ const Home = () => {
           <button type="submit">Diagnose</button>
         </form>
       )}
+      {!myHttp2.loading && <DiagnosisResult data={diagnosisData} />}
     </>
   );
 };
