@@ -20,9 +20,10 @@ export const diagnoseBodyInit = (sex="male", value) => {
 };
 
 export const createEvidenceBody = (evidence, index) => {
+  // We are only making body from first element, but mentions contains various elements(remember to use all)
   const data =  evidence.mentions[0];
   const body = { id: data.id, choice_id: data.choice_id };
-  if (index != 0) {
+  if (index !== 0) {
     return body;
   } else {
       body["source"] = "initial";
