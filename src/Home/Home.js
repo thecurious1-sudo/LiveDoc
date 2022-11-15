@@ -9,35 +9,38 @@ import {
   createEvidences,
   createDiagnoseBody,
 } from "../utils/jsonBody";
-import { useRef } from "react";
-const Main = () => {
-  let evidences = [];
+
+let evidences = [];
+const Home = () => {
   const myHttp = useHttp();
   const myHttp2 = useHttp();
-  const ageRef = useRef();
-
+  const [age, setAge] = useState(null);
+  const [loading, setLoading] = useState(false);
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-    let diagnoseBody = diagnoseBodyInit("male", ageRef.current.value);
+    let diagnoseBody = diagnoseBodyInit("male", age);
     diagnoseBody = createDiagnoseBody(diagnoseBody, evidences);
+    console.log(diagnoseBody);
     await myHttp2.post({
       url: DIAGNOSE,
       body: diagnoseBody,
     });
+    evidences = [];
   };
 
   // Fetches the symptom id corresponding to added symptom
   const symptomSubmitHandler = async () => {
     const inputs = document.querySelectorAll("#symptoms");
-    const ageText = ageRef.current.value;
+    setLoading(true);
     for (let input of inputs) {
       let symptomText = input.value;
       await myHttp.post({
         url: SYMPTOM_DETAILS,
-        body: parseBody(symptomText, ageText),
+        body: parseBody(symptomText, age),
       });
     }
+    setLoading(false);
   };
 
   // Add/Remove more symptom fields
@@ -52,6 +55,13 @@ const Main = () => {
   };
   const removeSymptomHandler = (e) => {
     e.preventDefault();
+    if (inputs.length > 1) {
+      setInputs((prevState) => {
+        let newData = prevState.slice();
+        newData.splice(-1);
+        return newData;
+      });
+    }
   };
 
   // Creates the evidences array for diagnosis request
@@ -59,10 +69,8 @@ const Main = () => {
     if (myHttp.data) {
       let evidenceBody = createEvidenceBody(myHttp.data, 0);
       evidences = createEvidences(evidences, evidenceBody);
-      console.log(evidences);
     }
   }, [myHttp.data]);
-
 
   // Prints data after diagnosis request is over
   useEffect(() => {
@@ -71,24 +79,34 @@ const Main = () => {
     }
   }, [myHttp2.data]);
 
+  // Handler to set age
+  const changeAgeHandler = (e) => {
+    setAge(e.target.value);
+  };
+
   return (
     <>
-      <form onSubmit={formSubmitHandler}>
-        Enter age
-        <input type="number" ref={ageRef} />
-        <br></br>
-        <span> Enter symptom</span>
-        {inputs}
-        <button type="button" onClick={symptomSubmitHandler}>
-          Submit
-        </button>
-        <button type="button" onClick={addSymptomFieldHandler}>
-          Add Symptom
-        </button>
-        <br></br>
-        <button type="submit">Diagnose</button>
-      </form>
+      {!loading && (
+        <form onSubmit={formSubmitHandler}>
+          Enter age
+          <input type="number" onChange={changeAgeHandler} />
+          <br></br>
+          <span> Enter symptom</span>
+          {inputs}
+          <button type="button" onClick={symptomSubmitHandler}>
+            Submit
+          </button>
+          <button type="button" onClick={addSymptomFieldHandler}>
+            Add Symptom
+          </button>
+          <button type="button" onClick={removeSymptomHandler}>
+            Remove Symptom
+          </button>
+          <br></br>
+          <button type="submit">Diagnose</button>
+        </form>
+      )}
     </>
   );
 };
-export default Main;
+export default Home;
