@@ -3,6 +3,7 @@ import useHttp from "../hooks/use-http";
 import { DIAGNOSE, SYMPTOM_DETAILS } from "../utils/routes";
 import { useEffect, useState } from "react";
 
+
 import {
   createEvidenceBody,
   diagnoseBodyInit,
@@ -10,7 +11,7 @@ import {
   createEvidences,
   createDiagnoseBody,
 } from "../utils/jsonBody";
-import DiagonosisResults from "../Components/DiagonosisResults";
+import DiagonosisResults from '../Components/DiagonosisResults'
 
 let evidences = [];
 const Home = () => {
@@ -113,10 +114,7 @@ const Home = () => {
           <br></br>
           <button type="submit">Diagnose</button>
         </form>
-      )}{" "}
-      {myHttp2.data && myHttp2.data.conditions.length>0 && (
-        <DiagonosisResults data={myHttp2.data.conditions} />
-      )}
+      )}      {!myHttp2.loading && <DiagonosisResults data={diagnosisData.conditions} />}
     </>
   );
 };
