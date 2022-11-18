@@ -19,8 +19,6 @@ let count = 1;
 function Row(props) {
   let myDisease = props.row.commonName.trim().replaceAll(" ", "-");
   let myUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${myDisease}&df=info_link_data`;
-  console.log(myDisease);
-  console.log(myUrl);
   const myHttp = useHttp();
   useEffect(() => {
     const fetchData=async () => {
