@@ -51,7 +51,7 @@ function Row(props) {
           {row.commonName}
         </TableCell>
         <TableCell align="right">{row.probability}</TableCell>
-        {myHttp.data && <TableCell align="right"><a target="blank" href={`${myHttp.data[3][0][0].split(",")[0]}`}>Know More</a></TableCell>}
+        {myHttp.data && myHttp.data[3] && myHttp.data[3][0] && <TableCell align="right"><a target="blank" href={`${myHttp.data[3][0][0].split(",")[0]}`}>Know More</a></TableCell>}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

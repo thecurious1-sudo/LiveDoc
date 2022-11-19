@@ -1,6 +1,11 @@
 import useHttp from "../hooks/use-http";
 import { DIAGNOSE, SYMPTOM_DETAILS } from "../utils/routes";
 import { useEffect, useState } from "react";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import MenuItem from '@mui/material/MenuItem';
+
 
 import {
   createEvidenceBody,
@@ -18,13 +23,13 @@ const Home = () => {
   const myHttp = useHttp();
   const myHttp2 = useHttp();
   const [age, setAge] = useState(null);
+  const [sex, setSex] = React.useState('male');
   const [loading, setLoading] = useState(false);
   const [diagnosisData, setDiagnosisData] = useState([]);
-
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
     e.preventDefault();
-    diagnoseBody = diagnoseBodyInit("male", age);
+    diagnoseBody = diagnoseBodyInit(sex, age);
     diagnoseBody = createDiagnoseBody(diagnoseBody, evidences);
     console.log(diagnoseBody);
     await myHttp2.post({
@@ -96,6 +101,7 @@ const Home = () => {
 
   return (
     <>
+      <SelectTextFields sex={sex} setSex={setSex} />
       {!loading && (
         <form onSubmit={formSubmitHandler}>
           Enter age
@@ -124,3 +130,51 @@ const Home = () => {
   );
 };
 export default Home;
+
+
+
+const currencies = [
+  {
+    value: 'male',
+    label: 'Male',
+  },
+  {
+    value: 'female',
+    label: 'Female',
+  }
+];
+
+function SelectTextFields(props) {
+
+  const {sex, setSex } = props;
+  const handleChange = (event) => {
+    setSex(event.target.value);
+  };
+
+  return (
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id="outlined-select-currency"
+          select
+          label="Sex"
+          value={sex}
+          onChange={handleChange}
+        >
+          {currencies.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+      </div>
+    </Box>
+  );
+}
