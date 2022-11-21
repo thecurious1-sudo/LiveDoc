@@ -1,12 +1,14 @@
 import useHttp from "../hooks/use-http";
 import { DIAGNOSE, SYMPTOM_DETAILS } from "../utils/routes";
 import { useEffect, useState } from "react";
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-
-
+import * as React from "react";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import Button from "@mui/material/Button";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import { CircularProgress } from "@mui/material";
+import styles from "../Home/Home.module.css";
 import {
   createEvidenceBody,
   diagnoseBodyInit,
@@ -15,15 +17,15 @@ import {
   createDiagnoseBody,
 } from "../utils/jsonBody";
 import DiagonosisResults from "../Components/DiagonosisResults";
-import { getNativeSelectUtilityClasses } from "@mui/material";
 import Triage from "../Components/Triage";
-let diagnoseBody=null;
+let diagnoseBody = null;
 let evidences = [];
 const Home = () => {
+  console.log(evidences);
   const myHttp = useHttp();
   const myHttp2 = useHttp();
   const [age, setAge] = useState(null);
-  const [sex, setSex] = React.useState('male');
+  const [sex, setSex] = React.useState("male");
   const [loading, setLoading] = useState(false);
   const [diagnosisData, setDiagnosisData] = useState([]);
   // Submits the form to get questions and conditions
@@ -101,52 +103,51 @@ const Home = () => {
 
   return (
     <>
-      <SelectTextFields sex={sex} setSex={setSex} />
-      {!loading && (
-        <form onSubmit={formSubmitHandler}>
-          Enter age
-          <input type="number" onChange={changeAgeHandler} />
-          <br></br>
-          <span> Enter symptom</span>
-          {inputs}
-          <button type="button" onClick={symptomSubmitHandler}>
-            Submit
-          </button>
-          <button type="button" onClick={addSymptomFieldHandler}>
-            Add Symptom
-          </button>
-          <button type="button" onClick={removeSymptomHandler}>
-            Remove Symptom
-          </button>
-          <br></br>
-          <button type="submit">Diagnose</button>
-        </form>
-      )}
-      {diagnoseBody && (<Triage diagnoseBody={diagnoseBody}></Triage>)}
-      {myHttp2.data && myHttp2.data.conditions.length>0 && (
-        <DiagonosisResults data={myHttp2.data.conditions} />
-      )}
+      <div className={styles.container}>
+        {!loading && (
+          <form className={styles.myForm123} onSubmit={formSubmitHandler}>
+            <FormSelectField sex={sex} setSex={setSex} />
+            <FormTextField label="Age" onChangeHandler={changeAgeHandler} />
+            <div>
+              <span> Enter symptom</span>
+              {inputs}
+              <button type="button" onClick={symptomSubmitHandler}>
+                Submit
+              </button>
+              <button type="button" onClick={addSymptomFieldHandler}>
+                Add Symptom
+              </button>
+              <button type="button" onClick={removeSymptomHandler}>
+                Remove Symptom
+              </button>
+            </div>
+            {/* <button type="submit">Diagnose</button> */}
+            <ImgButton disabled={evidences.length === 0} />
+          </form>
+        )}
+        {diagnoseBody && <Triage diagnoseBody={diagnoseBody}></Triage>}
+        {myHttp2.data && myHttp2.data.conditions.length > 0 && (
+          <DiagonosisResults data={myHttp2.data.conditions} />
+        )}
+      </div>
     </>
   );
 };
 export default Home;
 
-
-
 const currencies = [
   {
-    value: 'male',
-    label: 'Male',
+    value: "male",
+    label: "Male",
   },
   {
-    value: 'female',
-    label: 'Female',
-  }
+    value: "female",
+    label: "Female",
+  },
 ];
 
-function SelectTextFields(props) {
-
-  const {sex, setSex } = props;
+function FormSelectField(props) {
+  const { sex, setSex } = props;
   const handleChange = (event) => {
     setSex(event.target.value);
   };
@@ -155,7 +156,7 @@ function SelectTextFields(props) {
     <Box
       component="form"
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
+        "& .MuiTextField-root": { m: 1, width: "25ch" },
       }}
       noValidate
       autoComplete="off"
@@ -176,5 +177,39 @@ function SelectTextFields(props) {
         </TextField>
       </div>
     </Box>
+  );
+}
+function FormTextField(props) {
+  return (
+    <Box
+      component="form"
+      sx={{
+        "& .MuiTextField-root": { m: 1, width: "25ch" },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+        id="outlined-helperText"
+        label={props.label}
+        onChange={props.onChangeHandler}
+      />
+    </Box>
+  );
+}
+
+function ImgButton(props) {
+  return (
+    <>
+      <Button
+        // disabled={props.disabled}
+        style={{ width: "fit-content" }}
+        type="submit"
+        variant="contained"
+        endIcon={<MonitorHeartIcon />}
+      >
+        Diagnose
+      </Button>
+    </>
   );
 }
