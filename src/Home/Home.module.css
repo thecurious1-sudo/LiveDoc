@@ -11,3 +11,8 @@
     align-items: center;
     justify-content: center;
 }
+
+.age-sex{
+    display: flex;
+    border: 1px solid black;
+}

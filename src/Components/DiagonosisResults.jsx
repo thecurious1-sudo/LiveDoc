@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -15,7 +14,6 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import useHttp from '../hooks/use-http';
 import { useEffect } from 'react';
-let count = 1;
 function Row(props) {
   let myDisease = props.row.commonName.trim().replaceAll(" ", "-");
   let myUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${myDisease}&df=info_link_data`;
@@ -95,8 +93,6 @@ function Row(props) {
 
 
 export default function DiagonosisResults(props) {
-  count++;
-  console.log(count);
   const { data } = props;
   const rowss = data.map((eachDisease) => (
     { commonName: eachDisease.common_name, probability:eachDisease.probability}

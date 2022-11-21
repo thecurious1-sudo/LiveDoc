@@ -12,7 +12,7 @@ const Triage = (props) => {
              });
          }
          fetchData();
-     }, [])
+     }, [props])
     useEffect(() => {
          if(myHttp.data)
          setTriageLevel(myHttp.data.triage_level);

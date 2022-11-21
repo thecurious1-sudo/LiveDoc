@@ -7,7 +7,6 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-import { CircularProgress } from "@mui/material";
 import styles from "../Home/Home.module.css";
 import {
   createEvidenceBody,
@@ -18,16 +17,19 @@ import {
 } from "../utils/jsonBody";
 import DiagonosisResults from "../Components/DiagonosisResults";
 import Triage from "../Components/Triage";
+import Chip from "../Components/Chip";
 let diagnoseBody = null;
 let evidences = [];
 const Home = () => {
-  console.log(evidences);
   const myHttp = useHttp();
   const myHttp2 = useHttp();
   const [age, setAge] = useState(null);
   const [sex, setSex] = React.useState("male");
   const [loading, setLoading] = useState(false);
-  const [diagnosisData, setDiagnosisData] = useState([]);
+  const [chips, setChips] = useState([]);
+  const [inputs, setInputs] = useState([]);
+  const inputRef = React.useRef();
+
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -39,18 +41,19 @@ const Home = () => {
       body: diagnoseBody,
     });
     evidences = [];
+    setInputs([]);
+    setChips([]);
   };
 
   // Fetches the symptom id corresponding to added symptom
   const symptomSubmitHandler = async () => {
-    const inputs = document.querySelectorAll("#symptoms");
     setLoading(true);
+    console.log(inputs);
     for (let input of inputs) {
-      let symptomText = input.value;
-      if (symptomText.length > 0) {
+      if (input.length > 0) {
         await myHttp.post({
           url: SYMPTOM_DETAILS,
-          body: parseBody(symptomText, age),
+          body: parseBody(input, age),
         });
       }
     }
@@ -58,21 +61,35 @@ const Home = () => {
   };
 
   // Add/Remove more symptom fields
-  const [inputs, setInputs] = useState([
-    <input type="text" key={+0} id="symptoms" />,
-  ]);
   const addSymptomFieldHandler = (e) => {
     e.preventDefault();
-    const ind = inputs.length;
-    const input = <input key={+ind} type="text" id="symptoms" />;
-    setInputs([...inputs, input]);
+    const value = inputRef.current.value;
+    if (value.length > 0) {
+      const ind = +chips.length;
+      const chip = (
+        <Chip
+          onDelete={removeSymptomHandler}
+          label={inputRef.current.value}
+          ind={+ind}
+          key={ind}
+        />
+      );
+      setChips([...chips, chip]);
+      setInputs([...inputs, value]);
+    }
+    inputRef.current.value = "";
   };
-  const removeSymptomHandler = (e) => {
-    e.preventDefault();
-    if (inputs.length > 1) {
+  const removeSymptomHandler = (ind) => {
+    if (chips.length >= 0) {
       setInputs((prevState) => {
         let newData = prevState.slice();
-        newData.splice(-1);
+        newData.splice(ind, 1);
+        return newData;
+      });
+
+      setChips((prevState) => {
+        let newData = prevState.slice();
+        newData.splice(ind, 1);
         return newData;
       });
     }
@@ -92,7 +109,6 @@ const Home = () => {
   useEffect(() => {
     if (myHttp2.data) {
       console.log(myHttp2.data);
-      setDiagnosisData(myHttp2.data);
     }
   }, [myHttp2.data]);
 
@@ -106,26 +122,32 @@ const Home = () => {
       <div className={styles.container}>
         {!loading && (
           <form className={styles.myForm123} onSubmit={formSubmitHandler}>
-            <FormSelectField sex={sex} setSex={setSex} />
-            <FormTextField label="Age" onChangeHandler={changeAgeHandler} />
+            <div className={styles["age-sex"]}>
+              <FormSelectField sex={sex} setSex={setSex} />
+              <FormTextField
+                label="Age"
+                onChangeHandler={changeAgeHandler}
+                value={age}
+              />
+            </div>
             <div>
               <span> Enter symptom</span>
-              {inputs}
-              <button type="button" onClick={symptomSubmitHandler}>
-                Submit
-              </button>
+              <input type="text" id="symptoms" ref={inputRef} />
+              {chips}
               <button type="button" onClick={addSymptomFieldHandler}>
                 Add Symptom
               </button>
-              <button type="button" onClick={removeSymptomHandler}>
-                Remove Symptom
+              <button type="button" onClick={symptomSubmitHandler}>
+                Submit
               </button>
             </div>
             {/* <button type="submit">Diagnose</button> */}
             <ImgButton disabled={evidences.length === 0} />
           </form>
         )}
-        {diagnoseBody && <Triage diagnoseBody={diagnoseBody}></Triage>}
+        {myHttp2.data && diagnoseBody && (
+          <Triage diagnoseBody={diagnoseBody}></Triage>
+        )}
         {myHttp2.data && myHttp2.data.conditions.length > 0 && (
           <DiagonosisResults data={myHttp2.data.conditions} />
         )}

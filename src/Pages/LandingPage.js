@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../LandingPage/LandingPage.css";
 
 function Home() {
@@ -29,6 +30,11 @@ function Home() {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
+              <li className="nav-item px-2">
+                  <Link className="nav-link" aria-current="page" to="/home">
+                    Home
+                  </Link>
+                </li>
                 <li className="nav-item px-2">
                   <a className="nav-link" aria-current="page" href="#about">
                     About Us
