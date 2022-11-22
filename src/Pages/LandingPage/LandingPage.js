@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../LandingPage/LandingPage.css";
+import "./LandingPage.css";
 
 function Home() {
   return (
@@ -30,7 +30,7 @@ function Home() {
               id="navbarSupportedContent"
             >
               <ul className="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
-              <li className="nav-item px-2">
+                <li className="nav-item px-2">
                   <Link className="nav-link" aria-current="page" to="/home">
                     Home
                   </Link>

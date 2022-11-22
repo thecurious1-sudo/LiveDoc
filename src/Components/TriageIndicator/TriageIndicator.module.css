@@ -1,0 +1,48 @@
+.container {
+    width: 27%;
+    height: 8%;
+    display: flex;
+    flex-direction: column;
+    margin: 1%;
+    padding: 0%;
+}
+
+
+.scale {
+    display: flex;
+    flex-grow: 1;
+}
+
+.scale div {
+    display: inline;
+    height: 100%;
+    /* border: 2px solid black; */
+    flex-grow: 1;
+}
+
+.class1 {
+    background-color: #3c78df;
+}
+
+.class2 {
+    background-color: #1d63db;
+}
+
+.class3 {
+    background-color: #155ad0;
+}
+
+.class4 {
+    background-color: #0c4dbd;
+}
+
+.class5 {
+    background-color: #10459f;
+}
+
+.pointer {
+    position: relative;
+    left: 8.5%;
+}
+
+/* 8.5 26.5 46.5 68.5 87.5 */

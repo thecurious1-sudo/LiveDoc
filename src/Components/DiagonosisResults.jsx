@@ -1,41 +1,40 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import useHttp from '../hooks/use-http';
-import { useEffect } from 'react';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import IconButton from "@mui/material/IconButton";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import useHttp from "../hooks/use-http";
+import { useEffect } from "react";
 function Row(props) {
   let myDisease = props.row.commonName.trim().replaceAll(" ", "-");
   let myUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${myDisease}&df=info_link_data`;
   const myHttp = useHttp();
   useEffect(() => {
-    const fetchData=async () => {
+    const fetchData = async () => {
       await myHttp.get({
-        url: myUrl
+        url: myUrl,
       });
-
-    }
+    };
     fetchData();
   }, []);
 
   useEffect(() => {
     console.log(myHttp.data);
-  },[myHttp.data])
+  }, [myHttp.data]);
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   return (
     <React.Fragment>
-      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -49,7 +48,13 @@ function Row(props) {
           {row.commonName}
         </TableCell>
         <TableCell align="right">{row.probability}</TableCell>
-        {myHttp.data && myHttp.data[3] && myHttp.data[3][0] && <TableCell align="right"><a target="blank" href={`${myHttp.data[3][0][0].split(",")[0]}`}>Know More</a></TableCell>}
+        {myHttp.data && myHttp.data[3] && myHttp.data[3][0] && (
+          <TableCell align="right">
+            <a target="blank" href={`${myHttp.data[3][0][0].split(",")[0]}`}>
+              Know More
+            </a>
+          </TableCell>
+        )}
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -90,30 +95,30 @@ function Row(props) {
   );
 }
 
-
-
 export default function DiagonosisResults(props) {
   const { data } = props;
-  const rowss = data.map((eachDisease) => (
-    { commonName: eachDisease.common_name, probability:eachDisease.probability}
-  ));
+  const rowss = data.map((eachDisease) => ({
+    commonName: eachDisease.common_name,
+    probability: eachDisease.probability,
+  }));
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Disease/Common Name</TableCell>
-            <TableCell align="right">Probability</TableCell>
-            <TableCell align="right">Link</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rowss && rowss.map((row) => (
-            <Row key={row.commonName} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <TableContainer component={Paper}>
+        <Table aria-label="collapsible table">
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>Disease/Common Name</TableCell>
+              <TableCell align="right">Probability</TableCell>
+              <TableCell align="right">Link</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rowss &&
+              rowss.map((row) => <Row key={row.commonName} row={row} />)}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

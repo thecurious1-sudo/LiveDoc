@@ -9,12 +9,12 @@
   padding: 0 1rem;
 }
 
-.delete{
-    border: 1px solid blue;
-    border-radius: 50%;
+.delete {
+  border: 1px solid blue;
+  border-radius: 50%;
 }
 
-.delete:hover{
-    cursor: pointer;
-    background-color: wheat;
+.delete:hover {
+  cursor: pointer;
+  background-color: wheat;
 }

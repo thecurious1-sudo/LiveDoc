@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandingPage from "./Pages/LandingPage";
-import Home from "./Pages/Home";
+import LandingPage from "./Pages/LandingPage/LandingPage";
+import Home from "./Pages/Home/Home";
 function App() {
   return (
     <>

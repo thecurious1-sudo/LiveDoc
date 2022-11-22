@@ -1,26 +1,26 @@
-import useHttp from "../hooks/use-http";
-import { DIAGNOSE, SYMPTOM_DETAILS } from "../utils/routes";
+import useHttp from "../../hooks/use-http";
+import { DIAGNOSE, SYMPTOM_DETAILS } from "../../utils/routes";
 import { useEffect, useState } from "react";
 import * as React from "react";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
-import styles from "../Home/Home.module.css";
+import styles from "./Home.module.css";
+import ImgButton from "../../Components/ui/ImgButton";
+import { FormTextField } from "../../Components/ui/FormTextField";
+import FormSelectField from "../../Components/ui/FormSelectField";
+import { Button } from "@mui/material";
 import {
   createEvidenceBody,
   diagnoseBodyInit,
   parseBody,
   createEvidences,
   createDiagnoseBody,
-} from "../utils/jsonBody";
-import DiagonosisResults from "../Components/DiagonosisResults";
-import Triage from "../Components/Triage";
-import Chip from "../Components/Chip";
+} from "../../utils/jsonBody";
+import DiagonosisResults from "../../Components/DiagonosisResults";
+import Triage from "../../Components/Triage";
+import Chip from "../../Components/Chip";
 let diagnoseBody = null;
-let evidences = [];
 const Home = () => {
+  const [evidences, setEvidences] = useState([]);
   const myHttp = useHttp();
   const myHttp2 = useHttp();
   const [age, setAge] = useState(null);
@@ -29,7 +29,6 @@ const Home = () => {
   const [chips, setChips] = useState([]);
   const [inputs, setInputs] = useState([]);
   const inputRef = React.useRef();
-
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -40,7 +39,7 @@ const Home = () => {
       url: DIAGNOSE,
       body: diagnoseBody,
     });
-    evidences = [];
+    setEvidences([]);
     setInputs([]);
     setChips([]);
   };
@@ -48,7 +47,6 @@ const Home = () => {
   // Fetches the symptom id corresponding to added symptom
   const symptomSubmitHandler = async () => {
     setLoading(true);
-    console.log(inputs);
     for (let input of inputs) {
       if (input.length > 0) {
         await myHttp.post({
@@ -100,7 +98,7 @@ const Home = () => {
     if (myHttp.data) {
       if (myHttp.data.obvious) {
         let evidenceBody = createEvidenceBody(myHttp.data, 0);
-        evidences = createEvidences(evidences, evidenceBody);
+        setEvidences(createEvidences(evidences, evidenceBody));
       }
     }
   }, [myHttp.data]);
@@ -119,9 +117,9 @@ const Home = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        {!loading && (
-          <form className={styles.myForm123} onSubmit={formSubmitHandler}>
+      <div className={styles.main}>
+        <div className={styles.container}>
+          <form className={styles.inputForm} onSubmit={formSubmitHandler}>
             <div className={styles["age-sex"]}>
               <FormSelectField sex={sex} setSex={setSex} />
               <FormTextField
@@ -131,107 +129,38 @@ const Home = () => {
               />
             </div>
             <div>
-              <span> Enter symptom</span>
               <input type="text" id="symptoms" ref={inputRef} />
               {chips}
-              <button type="button" onClick={addSymptomFieldHandler}>
-                Add Symptom
-              </button>
+              <Button
+                variant="outlined"
+                onClick={addSymptomFieldHandler}
+                // sx={{ padding: "0px", width: "20px" }}
+              >
+                +
+              </Button>
+              {/* <button type="button" >
+                +
+              </button> */}
               <button type="button" onClick={symptomSubmitHandler}>
                 Submit
               </button>
             </div>
             {/* <button type="submit">Diagnose</button> */}
-            <ImgButton disabled={evidences.length === 0} />
+            <ImgButton
+              disabled={evidences.length === 0}
+              icon={<MonitorHeartIcon />}
+            />
           </form>
-        )}
-        {myHttp2.data && diagnoseBody && (
-          <Triage diagnoseBody={diagnoseBody}></Triage>
-        )}
+        </div>
         {myHttp2.data && myHttp2.data.conditions.length > 0 && (
           <DiagonosisResults data={myHttp2.data.conditions} />
         )}
       </div>
+
+      {myHttp2.data && diagnoseBody && (
+        <Triage diagnoseBody={diagnoseBody}></Triage>
+      )}
     </>
   );
 };
 export default Home;
-
-const currencies = [
-  {
-    value: "male",
-    label: "Male",
-  },
-  {
-    value: "female",
-    label: "Female",
-  },
-];
-
-function FormSelectField(props) {
-  const { sex, setSex } = props;
-  const handleChange = (event) => {
-    setSex(event.target.value);
-  };
-
-  return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <TextField
-          id="outlined-select-currency"
-          select
-          label="Sex"
-          value={sex}
-          onChange={handleChange}
-        >
-          {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
-    </Box>
-  );
-}
-function FormTextField(props) {
-  return (
-    <Box
-      component="form"
-      sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        id="outlined-helperText"
-        label={props.label}
-        onChange={props.onChangeHandler}
-      />
-    </Box>
-  );
-}
-
-function ImgButton(props) {
-  return (
-    <>
-      <Button
-        // disabled={props.disabled}
-        style={{ width: "fit-content" }}
-        type="submit"
-        variant="contained"
-        endIcon={<MonitorHeartIcon />}
-      >
-        Diagnose
-      </Button>
-    </>
-  );
-}
