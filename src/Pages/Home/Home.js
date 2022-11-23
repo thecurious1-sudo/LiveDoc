@@ -18,7 +18,6 @@ import {
 import DiagonosisResults from "../../Components/DiagonosisResults";
 import Triage from "../../Components/Triage";
 import Chip from "../../Components/Chip";
-import TripleDots from "../../Components/ui/TripleDots";
 let diagnoseBody = null;
 const Home = () => {
   const [evidences, setEvidences] = useState([]);
@@ -38,6 +37,9 @@ const Home = () => {
     setInputs([]);
     setChips([]);
     setDisabled(true);
+    myHttp.setNull();
+    myHttp2.setNull();
+    window.scrollTo(0, 0);
   };
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
@@ -146,44 +148,49 @@ const Home = () => {
                 value={age}
               />
             </div>
-            <div>
-              <FormTextField
-                onChangeHandler={setSymptomHandler}
-                label="Enter Symptom"
-                value={symptom}
-              />
-              {chips}
+            <div className={styles["symptom-container"]}>
+              <div className={styles["symptom-input-button"]}>
+                <FormTextField
+                  onChangeHandler={setSymptomHandler}
+                  label="Enter Symptom"
+                  value={symptom}
+                />
+                <Button
+                  sx={{ height: "10%", "margin-top": "6%" }}
+                  variant="outlined"
+                  onClick={addSymptomFieldHandler}
+                >
+                  +
+                </Button>
+              </div>
+              <div className={styles["chip-Container"]}>{chips}</div>
               <Button
+                sx={{ "margin-top": "2%" }}
                 variant="outlined"
-                onClick={addSymptomFieldHandler}
-                // sx={{ padding: "0px", width: "20px" }}
+                onClick={symptomSubmitHandler}
+                size="small"
               >
-                +
-              </Button>
-              {/* <button type="button" >
-                +
-              </button> */}
-              <button type="button" onClick={symptomSubmitHandler}>
                 Submit
-              </button>
+              </Button>
             </div>
-            {/* <button type="submit">Diagnose</button> */}
-            <ImgButton disabled={disabled} icon={<MonitorHeartIcon />} />
-            <Button onClick={clearFormHandler} variant="contained">
-              Clear Form
-            </Button>
+            <div className={styles["form-buttons"]}>
+              <ImgButton disabled={disabled} icon={<MonitorHeartIcon />} />
+              <Button onClick={clearFormHandler} variant="contained">
+                Reset
+              </Button>
+            </div>
           </form>
         </div>
-        {myHttp2.data && myHttp2.data.conditions.length > 0 && (
-          <DiagonosisResults data={myHttp2.data.conditions} />
+        {myHttp2.data && (
+          <div className={styles.output}>
+            {myHttp2.data && diagnoseBody && (
+              <Triage diagnoseBody={diagnoseBody}></Triage>
+            )}
+            {myHttp2.data && myHttp2.data.conditions.length > 0 && (
+              <DiagonosisResults data={myHttp2.data.conditions} />
+            )}
+          </div>
         )}
-      </div>
-
-      {myHttp2.data && diagnoseBody && (
-        <Triage diagnoseBody={diagnoseBody}></Triage>
-      )}
-      <div className={styles["dotted"]}>
-        <TripleDots />
       </div>
     </>
   );

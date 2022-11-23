@@ -9,6 +9,11 @@ const useHttp = () => {
     "App-Id": "3a5f4285",
     "App-Key": "14a9bfdba9cf8d21f6d59b9e7270a849",
   };
+  const setNull = () => {
+    setData(null);
+    setLoading(null);
+    setError(null);
+  };
   const get = useCallback(async (configs) => {
     setError(null);
     setLoading(true);
@@ -61,7 +66,7 @@ const useHttp = () => {
     }
     setLoading(false);
   }, []);
-  return { data, loading, error, get, post, patch, del, setError };
+  return { data, loading, error, get, post, patch, del, setError, setNull };
 };
 
 export default useHttp;

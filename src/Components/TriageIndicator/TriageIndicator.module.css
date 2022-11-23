@@ -1,10 +1,11 @@
 .container {
-    width: 27%;
-    height: 8%;
+    width: 99%;
+    height: 73px;
     display: flex;
     flex-direction: column;
     margin: 1%;
     padding: 0%;
+    margin-bottom: 6%;
 }
 
 
@@ -21,26 +22,36 @@
 }
 
 .class1 {
-    background-color: #3c78df;
+    background-color: #799B3D;
+    /* background-color: #3c78df; */
 }
 
 .class2 {
-    background-color: #1d63db;
+    /* background-color: #1d63db; */
+    background-color: #8AADB4;
 }
 
 .class3 {
-    background-color: #155ad0;
+    /* background-color: #155ad0; */
+    background-color: #F6CE3E;
 }
 
 .class4 {
-    background-color: #0c4dbd;
+    /* background-color: #0c4dbd; */
+    background-color: #D28E7E;
 }
 
 .class5 {
-    background-color: #10459f;
+    background-color: #9F3323;
+    /* background-color: #10459f; */
 }
 
 .pointer {
+    position: relative;
+    left: 8.5%;
+}
+
+.heading {
     position: relative;
     left: 8.5%;
 }
