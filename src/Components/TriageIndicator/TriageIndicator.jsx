@@ -2,7 +2,7 @@ import styles from "./TriageIndicator.module.css";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { Tooltip } from "@mui/material";
 const triageLeftPos = ["8.5%", "26.5%", "46.5%", "68.5%", "87.5%", "100%"];
-export default function (props) {
+export default function TriageIndicator (props) {
   let pointerPosition = triageLeftPos[props.triageLevel];
   return (
     // <div className={styles.main}>

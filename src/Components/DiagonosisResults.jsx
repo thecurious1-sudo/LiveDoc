@@ -14,6 +14,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import useHttp from "../hooks/use-http";
 import { useEffect } from "react";
+import { bgcolor, height } from "@mui/system";
 function Row(props) {
   let myDisease = props.row.commonName.trim().replaceAll(" ", "-");
   let myUrl = `https://clinicaltables.nlm.nih.gov/api/conditions/v3/search?terms=${myDisease}&df=info_link_data`;
@@ -103,8 +104,23 @@ export default function DiagonosisResults(props) {
   }));
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
+      <TableContainer
+        component={Paper}
+        sx={{
+          maxHeight: "20rem",
+          "&::-webkit-scrollbar": {
+            width: "0.4rem",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0,0,0,.1)",
+          },
+          boxShadow:
+            "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        }}
+      >
+        <Table
+          aria-label="collapsible table"
+        >
           <TableHead>
             <TableRow>
               <TableCell />
