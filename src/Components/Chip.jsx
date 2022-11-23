@@ -1,19 +1,19 @@
 import { Delete } from "@mui/icons-material";
 import Classes from "./Chip.module.css";
+import { Chip } from "@mui/material";
 export default function Chips(props) {
   const handleChipDelete = (ind) => {
     props.onDelete(ind);
   };
 
   return (
-    <div className={Classes.chipSet}>
-      <p>{props.label}</p>
-      <div
-        className={Classes.delete}
-        onClick={() => handleChipDelete(props.ind)}
-      >
-        <Delete />
-      </div>
-    </div>
+    <>
+      <Chip
+        sx={{ "font-size": "16px" }}
+        label={props.label}
+        variant="outlined"
+        onDelete={() => handleChipDelete(props.ind)}
+      />
+    </>
   );
 }

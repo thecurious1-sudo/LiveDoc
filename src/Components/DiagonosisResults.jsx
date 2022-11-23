@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
+import { Skeleton } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -36,7 +37,7 @@ function Row(props) {
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
+        {/* <TableCell>
           <IconButton
             aria-label="expand row"
             size="small"
@@ -44,11 +45,18 @@ function Row(props) {
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
-        </TableCell>
+        </TableCell> */}
         <TableCell component="th" scope="row">
           {row.commonName}
         </TableCell>
         <TableCell align="right">{row.probability}</TableCell>
+        {myHttp.loading && !myHttp.data && (
+          <TableCell align="right">
+            <Typography variant="caption">
+              <Skeleton />
+            </Typography>
+          </TableCell>
+        )}
         {myHttp.data && myHttp.data[3] && myHttp.data[3][0] && (
           <TableCell align="right">
             <a target="blank" href={`${myHttp.data[3][0][0].split(",")[0]}`}>
@@ -118,12 +126,10 @@ export default function DiagonosisResults(props) {
             "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         }}
       >
-        <Table
-          aria-label="collapsible table"
-        >
+        <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
+              {/* <TableCell /> */}
               <TableCell>Disease/Common Name</TableCell>
               <TableCell align="right">Probability</TableCell>
               <TableCell align="right">Link</TableCell>

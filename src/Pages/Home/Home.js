@@ -8,6 +8,7 @@ import ImgButton from "../../Components/ui/ImgButton";
 import { FormTextField } from "../../Components/ui/FormTextField";
 import FormSelectField from "../../Components/ui/FormSelectField";
 import { Button } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import {
   createEvidenceBody,
   diagnoseBodyInit,
@@ -181,7 +182,12 @@ const Home = () => {
             </div>
           </form>
         </div>
-        {myHttp2.data && (
+        {myHttp2.loading && !myHttp2.data && (
+          <div className={styles.output}>
+            <Skeleton variant="rounded" width={330} height={100} />
+          </div>
+        )}
+        {!myHttp2.loading && myHttp2.data && (
           <div className={styles.output}>
             {myHttp2.data && diagnoseBody && (
               <Triage diagnoseBody={diagnoseBody}></Triage>
