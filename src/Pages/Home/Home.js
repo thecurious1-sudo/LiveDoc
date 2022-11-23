@@ -28,6 +28,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [chips, setChips] = useState([]);
   const [inputs, setInputs] = useState([]);
+  const [disabled, setDisabled] = useState(true);
   const inputRef = React.useRef();
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
@@ -42,6 +43,7 @@ const Home = () => {
     setEvidences([]);
     setInputs([]);
     setChips([]);
+    setDisabled(true);
   };
 
   // Fetches the symptom id corresponding to added symptom
@@ -97,8 +99,10 @@ const Home = () => {
   useEffect(() => {
     if (myHttp.data) {
       if (myHttp.data.obvious) {
+        console.log("in here");
         let evidenceBody = createEvidenceBody(myHttp.data, 0);
         setEvidences(createEvidences(evidences, evidenceBody));
+        setDisabled(false);
       }
     }
   }, [myHttp.data]);
@@ -147,7 +151,7 @@ const Home = () => {
             </div>
             {/* <button type="submit">Diagnose</button> */}
             <ImgButton
-              disabled={evidences.length === 0}
+              disabled={disabled}
               icon={<MonitorHeartIcon />}
             />
           </form>
