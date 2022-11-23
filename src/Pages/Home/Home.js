@@ -30,6 +30,15 @@ const Home = () => {
   const [inputs, setInputs] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const inputRef = React.useRef();
+
+  const clearFormHandler = (e) => {
+    setAge(null);
+    setSex("male");
+    setEvidences([]);
+    setInputs([]);
+    setChips([]);
+    setDisabled(true);
+  };
   // Submits the form to get questions and conditions
   const formSubmitHandler = async (e) => {
     e.preventDefault();
@@ -40,10 +49,10 @@ const Home = () => {
       url: DIAGNOSE,
       body: diagnoseBody,
     });
-    setEvidences([]);
-    setInputs([]);
-    setChips([]);
-    setDisabled(true);
+    // setEvidences([]);
+    // setInputs([]);
+    // setChips([]);
+    // setDisabled(true);
   };
 
   // Fetches the symptom id corresponding to added symptom
@@ -150,10 +159,10 @@ const Home = () => {
               </button>
             </div>
             {/* <button type="submit">Diagnose</button> */}
-            <ImgButton
-              disabled={disabled}
-              icon={<MonitorHeartIcon />}
-            />
+            <ImgButton disabled={disabled} icon={<MonitorHeartIcon />} />
+            <Button onClick={clearFormHandler} variant="contained">
+              Clear Form
+            </Button>
           </form>
         </div>
         {myHttp2.data && myHttp2.data.conditions.length > 0 && (
