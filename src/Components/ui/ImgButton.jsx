@@ -1,5 +1,4 @@
 import { Button } from "@mui/material";
-import { useEffect } from "react";
 
 export default function ImgButton(props) {
   return (

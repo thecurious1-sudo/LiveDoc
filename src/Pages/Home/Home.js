@@ -18,6 +18,7 @@ import {
 import DiagonosisResults from "../../Components/DiagonosisResults";
 import Triage from "../../Components/Triage";
 import Chip from "../../Components/Chip";
+import TripleDots from "../../Components/ui/TripleDots";
 let diagnoseBody = null;
 const Home = () => {
   const [evidences, setEvidences] = useState([]);
@@ -29,8 +30,7 @@ const Home = () => {
   const [chips, setChips] = useState([]);
   const [inputs, setInputs] = useState([]);
   const [disabled, setDisabled] = useState(true);
-  const inputRef = React.useRef();
-
+  const [symptom, setSymptom] = useState("");
   const clearFormHandler = (e) => {
     setAge(null);
     setSex("male");
@@ -72,13 +72,13 @@ const Home = () => {
   // Add/Remove more symptom fields
   const addSymptomFieldHandler = (e) => {
     e.preventDefault();
-    const value = inputRef.current.value;
+    const value = symptom;
     if (value.length > 0) {
       const ind = +chips.length;
       const chip = (
         <Chip
           onDelete={removeSymptomHandler}
-          label={inputRef.current.value}
+          label={value}
           ind={+ind}
           key={ind}
         />
@@ -86,7 +86,7 @@ const Home = () => {
       setChips([...chips, chip]);
       setInputs([...inputs, value]);
     }
-    inputRef.current.value = "";
+    setSymptom("");
   };
   const removeSymptomHandler = (ind) => {
     if (chips.length >= 0) {
@@ -128,6 +128,11 @@ const Home = () => {
     setAge(e.target.value);
   };
 
+  // Sets Symptom
+  const setSymptomHandler = (e) => {
+    setSymptom(e.target.value);
+  };
+
   return (
     <>
       <div className={styles.main}>
@@ -142,7 +147,11 @@ const Home = () => {
               />
             </div>
             <div>
-              <input type="text" id="symptoms" ref={inputRef} />
+              <FormTextField
+                onChangeHandler={setSymptomHandler}
+                label="Enter Symptom"
+                value={symptom}
+              />
               {chips}
               <Button
                 variant="outlined"
@@ -173,6 +182,9 @@ const Home = () => {
       {myHttp2.data && diagnoseBody && (
         <Triage diagnoseBody={diagnoseBody}></Triage>
       )}
+      <div className={styles["dotted"]}>
+        <TripleDots />
+      </div>
     </>
   );
 };
