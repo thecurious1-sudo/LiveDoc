@@ -31,22 +31,17 @@ function Home() {
             >
               <ul className="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
                 <li className="nav-item px-2">
-                  <Link className="nav-link" aria-current="page" to="/home">
-                    Home
-                  </Link>
-                </li>
-                <li className="nav-item px-2">
                   <a className="nav-link" aria-current="page" href="#about">
                     About Us
                   </a>
                 </li>
                 <li className="nav-item px-2">
-                  <a className="nav-link" href="#departments">
-                    Departments
+                  <a className="nav-link" href="#specialties">
+                    Specialties
                   </a>
                 </li>
                 <li className="nav-item px-2">
-                  <a className="nav-link" href="#findUs">
+                  <a className="nav-link" href="#help">
                     Help{" "}
                   </a>
                 </li>
@@ -56,12 +51,6 @@ function Home() {
                   </a>
                 </li>
               </ul>
-              <a
-                className="btn btn-sm btn-outline-primary rounded-pill order-1 order-lg-0 ms-lg-4"
-                href="#!"
-              >
-                Sign Up
-              </a>
             </div>
           </div>
         </nav>
@@ -102,7 +91,7 @@ function Home() {
           </div>
         </section>
 
-        <section className="py-5" id="departments">
+        <section className="py-5" id="specialties">
           <div className="container">
             <div className="row">
               <div className="col-12 py-3">
@@ -296,234 +285,80 @@ function Home() {
                   <br className="d-none d-sm-block" />
                   where they are.
                 </p>
-                <div className="py-3">
-                  <button
-                    className="btn btn-lg btn-outline-primary rounded-pill"
-                    type="submit"
-                  >
-                    Learn more{" "}
-                  </button>
-                </div>
               </div>
             </div>
           </div>
         </section>
-        <section className="pb-1">
+
+        {/* Help section starts */}
+        <section className="pb-0" id="help">
           <div className="container">
             <div className="row">
               <div className="col-12 py-3">
-                <div
+                {/* <div
                   className="bg-holder bg-size"
                   style={{
-                    backgroundImage: "url(assets/img/gallery/blog-post.png)",
+                    backgroundImage: "url(assets/img/gallery/about-us.png)",
                     backgroundPosition: "top center",
                     backgroundSize: "contain",
                   }}
-                ></div>
-
-                <h1 className="text-center">RECENT BLOGPOSTS</h1>
+                ></div> */}
+                <h1 className="text-center">HOW TO USE?</h1>
               </div>
             </div>
           </div>
         </section>
-
-        <section>
+        <br></br>
+        <br></br>
+        <section className="py-5">
           <div
             className="bg-holder bg-size"
             style={{
-              backgroundImage: "url(assets/img/gallery/dot-bg.png)",
-              backgroundPosition: "top left",
-              backgroundSize: "auto",
-            }}
-          ></div>
-
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-6 col-lg-3 mb-4">
-                <div className="card h-100 shadow card-span rounded-3">
-                  <img
-                    className="card-img-top rounded-top-3"
-                    src="assets/img/gallery/covid-19.png"
-                    alt="news"
-                  />
-                  <div className="card-body">
-                    <span className="fs--1 text-primary me-3">Health</span>
-                    <svg
-                      className="bi bi-calendar2 me-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
-                      <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z">
-                        {" "}
-                      </path>
-                    </svg>
-                    <span className="fs--1 text-900">Nov 21, 2022</span>
-                    <span className="fs--1"></span>
-                    <h5 className="font-base fs-lg-0 fs-xl-1 my-3">
-                      COVID-19: The Most Up-to-Date Information
-                    </h5>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6 col-lg-3 mb-4">
-                <div className="card h-100 shadow card-span rounded-3">
-                  <img
-                    className="card-img-top rounded-top-3"
-                    src="assets/img/gallery/laboratories.png"
-                    alt="news"
-                  />
-                  <div className="card-body">
-                    <span className="fs--1 text-primary me-3">Lifestyle</span>
-                    <svg
-                      className="bi bi-calendar2 me-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
-                      <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z">
-                        {" "}
-                      </path>
-                    </svg>
-                    <span className="fs--1 text-900">Nov 25, 2022</span>
-                    <span className="fs--1"></span>
-                    <h5 className="font-base fs-lg-0 fs-xl-1 my-3">
-                      Importance of Accreditation for Laboratories
-                    </h5>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6 col-lg-3 mb-4">
-                <div className="card h-100 shadow card-span rounded-3">
-                  <img
-                    className="card-img-top rounded-top-3"
-                    src="assets/img/gallery/nicotine.png"
-                    alt="news"
-                  />
-                  <div className="card-body">
-                    <span className="fs--1 text-primary me-3">Health</span>
-                    <svg
-                      className="bi bi-calendar2 me-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
-                      <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z">
-                        {" "}
-                      </path>
-                    </svg>
-                    <span className="fs--1 text-900">Nov 28, 2022</span>
-                    <span className="fs--1"></span>
-                    <h5 className="font-base fs-lg-0 fs-xl-1 my-3">
-                      The dangers of nicotine are addressed in depth
-                    </h5>
-                  </div>
-                </div>
-              </div>
-              <div className="col-sm-6 col-lg-3 mb-4">
-                <div className="card h-100 shadow card-span rounded-3">
-                  <img
-                    className="card-img-top rounded-top-3"
-                    src="assets/img/gallery/treatment.png"
-                    alt="news"
-                  />
-                  <div className="card-body">
-                    <span className="fs--1 text-primary me-3">Health</span>
-                    <svg
-                      className="bi bi-calendar2 me-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      fill="currentColor"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"></path>
-                      <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z">
-                        {" "}
-                      </path>
-                    </svg>
-                    <span className="fs--1 text-900">Nov 30, 2022</span>
-                    <span className="fs--1"></span>
-                    <h5 className="font-base fs-lg-0 fs-xl-1 my-3">
-                      Treatment of patients with diabetes during COVID-19
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="bg-primary">
-          <div
-            className="bg-holder bg-size"
-            style={{
-              backgroundImage: "url(assets/img/gallery/cta-bg.png)",
-              backgroundPosition: "center right",
-              marginTop: "-8.125rem",
+              backgroundImage: "url(assets/img/gallery/about-bg.png)",
+              backgroundPosition: "top center",
               backgroundSize: "contain",
             }}
           ></div>
 
           <div className="container">
-            <div className="row">
-              <div className="col-lg-6">
-                <h2 className="fw-bold text-light">Get an update every week</h2>
-                <p className="text-soft-primary">
-                  Livedoc was created in order to improve the patient
-                  experience. <br />
-                  Providing world-className tests, and a wide range of other
-                  services.
-                </p>
+            <div className="row align-items-center">
+              <div className="col-md-6 order-lg-1 mb-5 mb-lg-0">
+                {/* <img
+                  className="rounded w-100"
+                  src="assets/img/about-us-cover.jpg"
+                  alt="..."
+                /> */}
+                <iframe
+                  width="100%"
+                  height="400px"
+                  frameborder="0"
+                  allowfullscreen
+                  src="https://dubble.so/guides/workflow-with-livedocnetlifyapp-whebvwhmf7fiezdxzu82?embed=1"
+                ></iframe>
               </div>
-              <div className="col-lg-6">
-                <h5 className="mb-3 text-soft-primary">
-                  SUBSCRIBE TO NEWSLETTER{" "}
-                </h5>
-                <form className="row gx-2 gy-2 align-items-center">
-                  <div className="col">
-                    <div className="input-group-icon">
-                      <label
-                        className="visually-hidden"
-                        htmlFor="inputEmailCta"
-                      >
-                        Address
-                      </label>
-                      <input
-                        className="form-control form-livedoc-control form-cta-control text-soft-primary newsletter-input "
-                        id="inputEmailCta"
-                        type="email"
-                        placeholder="Email"
-                      />
-                    </div>
-                  </div>
-                  <div className="d-grid gap-3 col-sm-auto">
-                    <button
-                      className="btn btn-lg btn-light rounded-3 px-5 py-3"
-                      type="submit"
-                    >
-                      Subscribe
-                    </button>
-                  </div>
-                </form>
+              <div className="col-md-6 text-center text-md-start">
+                <h2 className="fw-bold mb-4">
+                  Check this detailed guide <br className="d-none d-sm-block" />
+                </h2>
+                <p>
+                  We've created a detailed guide on how to use this platform{" "}
+                  <br className="d-none d-sm-block" />
+                  to know about the ailment you are suffering from by{" "}
+                  <br className="d-none d-sm-block" />
+                  giving the symptoms.
+                </p>
               </div>
             </div>
           </div>
         </section>
-        <section className="py-0 bg-primary">
+
+        {/* Help Section Over */}
+        <section className="py-0 bg-primary" id="findUs">
           <div className="container">
             <div className="row justify-content-md-between justify-content-evenly py-4">
               <div className="col-12 col-sm-8 col-md-6 col-lg-auto text-center text-md-start">
                 <p className="fs--1 my-2 fw-bold text-200">
-                  All rights Reserved &copy; Your Company, 2021
+                  All rights Reserved &copy; LiveDoc, 2022
                 </p>
               </div>
               <div className="col-12 col-sm-8 col-md-6">
@@ -543,10 +378,27 @@ function Home() {
                   &nbsp;by&nbsp;
                   <a
                     className="fw-bold text-info"
-                    href="https://themewagon.com/"
+                    href="https://github.com/thecurious1-sudo/LiveDoc"
                     target="_blank"
                   >
                     NERD HERD{" "}
+                  </a>
+                </p>
+                <p className="fs--1 my-2 text-center text-md-end text-200">
+                  <a
+                    className="fw-bold text-info"
+                    href="https://www.linkedin.com/in/vaibhav-jaiswal01/"
+                    target="_blank"
+                  >
+                    Vaibhav Jaiswal{"   "}
+                  </a>
+                  &{"  "}
+                  <a
+                    className="fw-bold text-info"
+                    href="https://www.linkedin.com/in/samarth-dengre-ba7682244/"
+                    target="_blank"
+                  >
+                    Samarth Dengre{" "}
                   </a>
                 </p>
               </div>
