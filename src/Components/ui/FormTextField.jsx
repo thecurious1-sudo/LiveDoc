@@ -12,6 +12,9 @@ export function FormTextField(props) {
       autoComplete="off"
     >
       <TextField
+        type={props.type}
+        error={props.error}
+        helperText={props.error && props.helperText}
         id="outlined-helperText"
         label={props.label}
         onChange={props.onChangeHandler}

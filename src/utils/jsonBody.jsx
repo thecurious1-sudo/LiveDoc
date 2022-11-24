@@ -9,7 +9,7 @@ export const parseBody = (text, value) => {
 };
 
 //returns a empty evidence body with sex,age,and evidence(null) to be filled by diagnoseBody
-export const diagnoseBodyInit = (sex = "male", value) => {
+export const diagnoseBodyInit = (sex, value) => {
   return {
     sex: sex,
     age: {

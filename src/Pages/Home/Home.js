@@ -6,6 +6,7 @@ import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import styles from "./Home.module.css";
 import ImgButton from "../../Components/ui/ImgButton";
 import { FormTextField } from "../../Components/ui/FormTextField";
+import { TextField } from "@mui/material";
 import FormSelectField from "../../Components/ui/FormSelectField";
 import { Button } from "@mui/material";
 import { Skeleton } from "@mui/material";
@@ -31,6 +32,7 @@ const Home = () => {
   const [inputs, setInputs] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [symptom, setSymptom] = useState("");
+  const [ageError, setAgeError] = useState(null);
   const clearFormHandler = (e) => {
     setAge(null);
     setSex("male");
@@ -60,6 +62,11 @@ const Home = () => {
 
   // Fetches the symptom id corresponding to added symptom
   const symptomSubmitHandler = async () => {
+    if (!age) {
+      console.log("ageError");
+      setAgeError(true);
+      return;
+    }
     setLoading(true);
     for (let input of inputs) {
       if (input.length > 0) {
@@ -129,6 +136,7 @@ const Home = () => {
   // Handler to set age
   const changeAgeHandler = (e) => {
     setAge(e.target.value);
+    if (e.target.value) setAgeError(false);
   };
 
   // Sets Symptom
@@ -144,6 +152,9 @@ const Home = () => {
             <div className={styles["age-sex"]}>
               <FormSelectField sex={sex} setSex={setSex} />
               <FormTextField
+                type="number"
+                error={ageError}
+                helperText="Please enter age"
                 label="Age"
                 onChangeHandler={changeAgeHandler}
                 value={age}
@@ -152,6 +163,7 @@ const Home = () => {
             <div className={styles["symptom-container"]}>
               <div className={styles["symptom-input-button"]}>
                 <FormTextField
+                  type="text"
                   onChangeHandler={setSymptomHandler}
                   label="Enter Symptom"
                   value={symptom}

@@ -29,9 +29,6 @@ function Row(props) {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log(myHttp.data);
-  }, [myHttp.data]);
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   return (

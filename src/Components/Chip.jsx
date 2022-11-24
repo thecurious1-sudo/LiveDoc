@@ -9,7 +9,7 @@ export default function Chips(props) {
   return (
     <>
       <Chip
-        sx={{ "font-size": "16px" }}
+        sx={{ fontSize: "16px" }}
         label={props.label}
         variant="outlined"
         onDelete={() => handleChipDelete(props.ind)}
