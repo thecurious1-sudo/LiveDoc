@@ -90,13 +90,13 @@ function Home() {
                   your&nbsp;<strong>better life.</strong>
                 </h1>
                 <p className="fs-1 mb-5">You can get the care you need 24/7.</p>
-                <a
+                <Link
                   className="btn btn-lg btn-primary rounded-pill"
-                  href="#!"
+                  to="/home"
                   role="button"
                 >
                   DIAGNOSE YOURSELF
-                </a>
+                </Link>
               </div>
             </div>
           </div>
