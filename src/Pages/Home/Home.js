@@ -62,6 +62,7 @@ const Home = () => {
 
   // Fetches the symptom id corresponding to added symptom
   const symptomSubmitHandler = async () => {
+    setDisabled(true);
     if (!age) {
       console.log("ageError");
       setAgeError(true);
@@ -76,6 +77,7 @@ const Home = () => {
         });
       }
     }
+    setDisabled(false);
     setLoading(false);
   };
 
@@ -141,6 +143,7 @@ const Home = () => {
 
   // Sets Symptom
   const setSymptomHandler = (e) => {
+    setDisabled(true);
     setSymptom(e.target.value);
   };
 
